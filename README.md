@@ -1,2 +1,2 @@
 # Isabelle-exercises
-My solutions to many of the exercises in Tobias Nipkow's "Programming and Proving in Isabelle/HOL (8/15/18)"
+My solutions to the exercises in Tobias Nipkow's "Programming and Proving in Isabelle/HOL (as of 8/15/18)"

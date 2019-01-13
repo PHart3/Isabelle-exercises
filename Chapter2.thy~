@@ -1,0 +1,103 @@
+theory Chapter2
+  imports Main
+begin
+
+(* Exercise 2.1  *)
+value "1 + (2::nat)"
+value "1 + (2::int)"
+value "1 - (2::nat)"
+value "1 - (2::int)"
+
+
+(* Exercise 2.2  *)
+
+fun add :: "nat \<Rightarrow> nat \<Rightarrow> nat" where "add 0 n = n" |
+"add (Suc m) n = Suc(add m n)"
+
+lemma add_assoc [simp] : "add (add p q) r  = add p (add q r)"
+  apply(induction p)
+   apply(auto)
+  done
+
+lemma add_02 [simp] : "add m 0 = m" apply(induction m)
+apply(auto)
+done
+
+lemma add_plus1 [simp] : "Suc (add q p) = add q (Suc p)"
+  apply(induction q)
+   apply(auto)
+  done
+
+lemma add_comm [simp] : "add p q = add q p"
+  apply(induction p)
+   apply(auto)
+  done
+
+
+fun double :: "nat \<Rightarrow> nat" where
+"double 0 = 0"
+| "double (Suc n) = 2 + (double n)"
+
+lemma double_correct [simp] : "double n = add n n"
+  apply(induction n)
+   apply(auto)
+  done
+
+
+(* Exercise 2.3 *)
+
+fun count :: "'a \<Rightarrow> 'a list \<Rightarrow> nat" where
+"count x Nil = 0"
+| "count x (Cons t ts) = 1 + (count x ts)"
+
+lemma leq_count_length : "count x xs \<le> length xs"
+  apply(induction xs)
+   apply(auto)
+  done
+
+(* Exercise 2.4 *)
+
+fun snoc :: " 'a list \<Rightarrow> 'a \<Rightarrow> 'a list" where
+"snoc Nil x = [x]"
+|"snoc (Cons t ts) x = Cons t (snoc ts x)"
+
+fun reverse :: " 'a list \<Rightarrow> 'a list" where
+"reverse Nil = Nil"
+|"reverse (Cons t ts) = snoc (reverse ts) t"
+
+lemma app_assoc [simp]: "(xs @ ys) @ zs = xs @ (ys @ zs)" 
+  apply(induction xs)
+  apply(auto)
+  done
+
+lemma snoc_add1 [simp] : "snoc xs x = xs @ [x]"
+  apply(induction xs)
+   apply(auto)
+  done
+
+lemma rev_app_distr [simp] : "reverse (xs @ ys) = (reverse ys) @ reverse(xs)"
+  apply(induction xs)
+   apply(auto)
+  done
+
+lemma reverse_correct : "reverse (reverse xs) = xs"
+  apply(induction xs)
+   apply(auto)
+  done
+
+(* Exercise 2.5 *)
+
+fun sum_upto  :: "nat \<Rightarrow> nat" where
+"sum_upto 0 = 0"
+| "sum_upto (Suc n) = (n + (sum_upto n)) + 1"
+
+lemma sum_upto_correct : "sum_upto n = n * (n + 1) div 2"
+  apply(induction n)
+  apply(auto)
+  done
+
+(* Exercise 2.6 *)
+
+
+
+end

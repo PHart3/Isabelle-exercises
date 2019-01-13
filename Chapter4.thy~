@@ -1,0 +1,68 @@
+theory Chapter4
+  imports Main Chapter2
+begin
+
+
+(* Exercise 4.1 *)
+
+lemma 
+  assumes T: "ALL x y. T x y \<or> T y x" 
+and 
+A: "ALL x y. A x y \<and> A y x \<longrightarrow> x = y" 
+and 
+TA: "ALL x y. T x y \<longrightarrow> A x y" 
+and 
+"A x y"
+shows "T x y"
+proof -
+  from assms show  "T x y" by blast
+qed
+
+(* Exercise 4.2 *)
+
+lemma "EX ys zs. xs = ys @ zs \<and> (length ys = length zs \<or> length ys = length zs + 1)"
+proof -
+  consider (odd) "odd (length xs)" | (even) "even (length xs)" by auto
+  then show ?thesis
+  proof cases
+    case odd
+    let ?l1 =  " take ((length xs + 1) div 2) xs" 
+    let ?l2 = " drop ((length xs + 1) div 2) xs" 
+    have 1: "xs = ?l1 @ ?l2" by auto
+    have 2: " length ?l1 = length ?l2 + 1" by try
+    by (smt "1" add.commute add_diff_cancel_right' diff_diff_left dvd_mult_div_cancel length_append 
+length_drop mult_2 odd odd_even_add odd_one odd_succ_div_two)
+    from 1 have "xs = ?l1 @ ?l2 \<and> ( length ?l1 = length ?l2 + 1)" using 2 by auto
+    thus ?thesis by blast
+  next
+    case even
+    let ?l1 =  " take ((length xs) div 2) xs" 
+    let ?l2 = " drop ((length xs) div 2) xs" 
+    have 1: "xs = ?l1 @ ?l2" by auto
+    have 2: " length ?l1 = length ?l2" by try
+    using even by auto
+  from 1 have "xs = ?l1 @ ?l2 \<and> ( length ?l1 = length ?l2)" using 2 by auto
+  thus ?thesis by blast
+qed
+qed
+
+(* Exercise 4.3 *)
+
+
+
+(* Exercise 4.4 *)
+
+
+
+(* Exercise 4.5 *)
+
+
+
+(* Exercise 4.6 *)
+
+
+
+(* Exercise 4.7 *)
+
+
+end
